@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Message } from './message';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,41 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'the30day';
+  /**
+   * 綁定畫面中的「名稱」欄位
+   *
+   */
+  name = '';
+
+  /**
+   * 綁定畫面中的「內容」欄位
+   *
+   */
+  content = '';
+  /**
+   * 所有留言都放在這裡
+   *
+   */
+  messages: Message[] = [];
+
+  addMessage(): void {
+
+    // 防呆，避免名稱或內容是空值時也可以留言
+    if (
+      !this.name.trim() ||
+      !this.content.trim()
+    ) {
+      return;
+    }
+
+    // 用名稱跟內容產生一個留言的資料物件
+    const message = new Message(this.name, this.content);
+
+    // 將留言的資料物件放進容器裡
+    this.messages.push(message);
+
+    // 清空內容
+    this.content = '';
+
+  }
 }
